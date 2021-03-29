@@ -8,17 +8,20 @@
   "scripts": {
     "lint": "eslint --fix --ext .js,.vue ./",
     "format": "prettier --write .",
+    "heroku-postbuild": "yarn && yarn build",
+    "start": "node server.js",
     "build": "quasar build",
-    "dev": "quasar dev",
-    "start": "quasar serve",
-    "postinstall": "npm run build && npm run start"
+    "dev": "quasar dev"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
     "axios": "^0.21.1",
     "brazilian-values": "^0.10.1",
+    "connect-history-api-fallback": "^1.6.0",
     "core-js": "^3.6.5",
+    "express": "^4.17.1",
     "quasar": "^1.0.0",
+    "serve-static": "^1.14.1",
     "vuelidate": "^0.7.6"
   },
   "devDependencies": {
