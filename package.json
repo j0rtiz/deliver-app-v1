@@ -8,7 +8,6 @@
   "scripts": {
     "lint": "eslint --fix --ext .js,.vue ./",
     "format": "prettier --write .",
-    "heroku-postbuild": "npm install && npm run build",
     "start": "node server.js",
     "build": "quasar build",
     "dev": "quasar dev"
