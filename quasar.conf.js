@@ -1,29 +1,43 @@
 const ESLintPlugin = require('eslint-webpack-plugin');
 
-module.exports = function () {
+module.exports = function() {
   return {
     supportTS: false,
-    boot: ['axios'],
+    boot: ['axios', 'vuelidate'],
     css: ['app.scss'],
     extras: ['fontawesome-v5', 'roboto-font', 'material-icons'],
     build: {
       vueRouterMode: 'hash',
+      distDir: './dist',
+      publicPath: '/',
       showProgress: true,
       chainWebpack(chain) {
         chain.plugin('eslint-webpack-plugin').use(ESLintPlugin, [{ extensions: ['js', 'vue'] }]);
+      },
+      env: {
+        API: '/api',
       },
     },
     devServer: {
       https: false,
       port: 4000,
       open: true,
+      proxy: {
+        '/api': {
+          target: 'https://deliver-api-v1.herokuapp.com',
+          changeOrigin: true,
+          pathRewrite: {
+            '^/api': 'api',
+          },
+        },
+      },
     },
     framework: {
       iconSet: 'fontawesome-v5',
       lang: 'pt-br',
       config: {},
       importStrategy: 'auto',
-      plugins: [],
+      plugins: ['Notify', 'Loading'],
     },
     animations: 'all',
     ssr: {
