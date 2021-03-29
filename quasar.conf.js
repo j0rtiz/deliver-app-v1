@@ -1,6 +1,6 @@
 const ESLintPlugin = require('eslint-webpack-plugin');
 
-module.exports = function () {
+module.exports = function (ctx) {
   return {
     supportTS: false,
     boot: ['axios', 'vuelidate'],
@@ -14,9 +14,13 @@ module.exports = function () {
       chainWebpack(chain) {
         chain.plugin('eslint-webpack-plugin').use(ESLintPlugin, [{ extensions: ['js', 'vue'] }]);
       },
-      env: {
-        API: '/api',
-      },
+      env: ctx.dev
+        ? {
+            API: '/api',
+          }
+        : {
+            API: 'https://deliver-api-v1.herokuapp.com/api',
+          },
     },
     devServer: {
       https: false,
