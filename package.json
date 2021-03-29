@@ -1,13 +1,14 @@
 {
   "name": "deliver-app-v1",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Teste prático Deliver App versão 1",
-  "productName": "Teste prático Deliver App versão 1",
+  "productName": "deliver-app-v1",
   "author": "j0rtiz <j0rtiz@protonmail.ch>",
-  "private": true,
+  "private": false,
   "scripts": {
-    "lint": "eslint --ext .js,.vue ./",
-    "test": "echo \"No test specified\" && exit 0"
+    "lint": "eslint --fix --ext .js,.vue ./",
+    "build": "quasar build",
+    "dev": "quasar dev"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
