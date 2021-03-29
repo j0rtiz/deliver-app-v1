@@ -1,12 +1,28 @@
 <template>
   <q-page class="row justify-center q-pa-md">
     <tabela class="col" :colunas="colunas" :dados="contas" titulo="Contas" />
+
+    <q-page-sticky position="bottom-right" :offset="offset">
+      <q-fab v-touch-pan.prevent.mouse="move" :disable="disable" direction="up" color="primary" icon="add">
+        <q-fab-action
+          label-class="bg-grey-3 text-grey-8 text-caption"
+          label-position="left"
+          label="Conta"
+          color="primary"
+          icon="fas fa-dollar-sign"
+          external-label
+          :disable="disable"
+          @click="add"
+        />
+      </q-fab>
+    </q-page-sticky>
   </q-page>
 </template>
 
 <script>
 import { formatToDate, formatToBRL } from 'brazilian-values';
 import Tabela from 'src/components/tabela';
+import Form from 'src/components/form';
 
 export default {
   name: 'Main',
@@ -23,7 +39,7 @@ export default {
           label: 'Data de Vencimento',
           align: 'left',
           sortable: true,
-          format: (val) => this.formatarData(val),
+          format: (val) => this.formatDate(val),
         },
         {
           name: 'dataPagamento',
@@ -31,7 +47,7 @@ export default {
           label: 'Data de Pagamento',
           align: 'left',
           sortable: true,
-          format: (val) => this.formatarData(val),
+          format: (val) => this.formatDate(val),
         },
         {
           name: 'valorOriginal',
@@ -51,13 +67,15 @@ export default {
         },
         { name: 'diasAtraso', field: 'diasAtraso', label: 'Dias em Atraso', align: 'left', sortable: true },
       ],
+      offset: [30, 30],
+      disable: false,
     };
   },
   mounted() {
-    this.buscarContas();
+    this.getBills();
   },
   methods: {
-    async buscarContas() {
+    async getBills() {
       this.$q.loading.show();
 
       try {
@@ -70,7 +88,7 @@ export default {
         this.$q.loading.hide();
       }
     },
-    formatarData(valor) {
+    formatDate(valor) {
       try {
         const objData = new Date(valor);
         objData.setHours(objData.getHours() + 3);
@@ -78,6 +96,20 @@ export default {
       } catch {
         return valor;
       }
+    },
+    move(ev) {
+      this.disable = ev.isFirst !== true && ev.isFinal !== true;
+      this.offset = [this.offset[0] - ev.delta.x, this.offset[1] - ev.delta.y];
+    },
+    add() {
+      this.$q
+        .dialog({
+          component: Form,
+          parent: this,
+        })
+        .onOk(() => {
+          this.getBills();
+        });
     },
   },
 };

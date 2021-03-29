@@ -41,7 +41,7 @@ module.exports = function (ctx) {
       lang: 'pt-br',
       config: {},
       importStrategy: 'auto',
-      plugins: ['Notify', 'Loading'],
+      plugins: ['Notify', 'Loading', 'Dialog'],
     },
     animations: 'all',
     ssr: {
