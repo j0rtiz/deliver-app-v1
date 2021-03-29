@@ -1,6 +1,6 @@
 const ESLintPlugin = require('eslint-webpack-plugin');
 
-module.exports = function() {
+module.exports = function () {
   return {
     supportTS: false,
     boot: ['axios', 'vuelidate'],
