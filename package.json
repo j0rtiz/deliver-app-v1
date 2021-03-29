@@ -9,7 +9,9 @@
     "lint": "eslint --fix --ext .js,.vue ./",
     "format": "prettier --write .",
     "build": "quasar build",
-    "dev": "quasar dev"
+    "dev": "quasar dev",
+    "start": "quasar serve",
+    "postinstall": "npm run build && npm run start"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
